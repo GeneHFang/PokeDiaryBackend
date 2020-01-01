@@ -7,9 +7,10 @@ class Api::V1::TrainersController < ApplicationController
     end
 
     def create
-        trainer = Trainer.find_or_create_by(trainer_params)
+        trainer = Trainer.new(trainer_params)
 
         if trainer.valid?
+            trainer.save()
             render json: Api::V1::TrainerSerializer.new(trainer)
         else
             render json: trainer.errors, status: :unprocessable_entity
@@ -36,6 +37,11 @@ class Api::V1::TrainersController < ApplicationController
         render json: Api::V1::TrainerSerializer.new(trainer)
     end
 
+
+
+
+    # wrap_parameters :user, include: [:name, :password, :password_confirmation]
+    
     private
 
     def set_trainer
@@ -43,7 +49,8 @@ class Api::V1::TrainersController < ApplicationController
     end
 
     def trainer_params
-        params.require(:trainer).permit(:name)
+        params.require(:trainer).permit(:name, :password, :password_confirmation)
     end
+
 
 end

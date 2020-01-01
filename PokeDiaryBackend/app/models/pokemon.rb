@@ -2,6 +2,10 @@ require 'poke-api-v2'
 class Pokemon < ApplicationRecord
     belongs_to :game
 
+
+    #not sure if this is how to hold data
+    @@locations = {}
+
     # url = 'https://pokeapi.co/api/v2/location-area/'
 
 
@@ -15,7 +19,12 @@ class Pokemon < ApplicationRecord
                 #keys
                 #   @sprites images
     def self.get_all_pokemon_by_location(locationID)
-        PokeApi.get(location_area: locationID).pokemon_encounters
+        unless @@locations[locationID]
+            @@locations << PokeApi.get(location_area: locationID).pokemon_encounters
+        end
+        
+        @@locations[locationID]
+
     end
 
 
