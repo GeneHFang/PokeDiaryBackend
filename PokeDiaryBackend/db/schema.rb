@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_23_145915) do
+ActiveRecord::Schema.define(version: 2020_01_02_041014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2019_12_23_145915) do
     t.string "type_of_game"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "version"
     t.index ["trainer_id"], name: "index_games_on_trainer_id"
   end
 
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 2019_12_23_145915) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "password_digest"
   end
 
 end
