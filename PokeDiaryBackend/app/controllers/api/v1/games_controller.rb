@@ -7,9 +7,10 @@ class Api::V1::GamesController < ApplicationController
     end
 
     def create
-        game = Game.find_or_create_by(game_params)
+        game = Game.new(game_params)
 
         if game.valid?
+            game.save()
             render json: Api::V1::GameSerializer.new(game)
         else
             render json: game.errors, status: :unprocessable_entity
@@ -21,7 +22,7 @@ class Api::V1::GamesController < ApplicationController
     end
 
     def update
-        @game = Game.assign_attributes(game_params)
+        @game.attributes = game_params
 
         if @game.save
             render json: Api::V1::GameSerializer.new(@game)
@@ -43,7 +44,7 @@ class Api::V1::GamesController < ApplicationController
     end
 
     def game_params
-        params.require(:game).permit(:name)
+        params.require(:game).permit(:name, :version, :type_of_game, :trainer_id)
     end
 
 end

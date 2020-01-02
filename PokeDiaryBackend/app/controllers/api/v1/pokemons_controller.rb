@@ -7,9 +7,10 @@ class Api::V1::PokemonsController < ApplicationController
     end
 
     def create
-        pokemon = Pokemon.find_or_create_by(pokemon_params)
+        pokemon = Pokemon.new(pokemon_params)
 
         if pokemon.valid?
+            pokemon.save()
             render json: Api::V1::PokemonSerializer.new(pokemon)
         else
             render json: pokemon.errors, status: :unprocessable_entity
